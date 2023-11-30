@@ -1,27 +1,42 @@
 package gtn.kobi.backend.service.impl;
 
-import gtn.kobi.backend.model.User;
+import gtn.kobi.backend.model.Users;
 import gtn.kobi.backend.repository.UserRepository;
 import gtn.kobi.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Override
-    public User signUp(User user) {
-        return null;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User signIn(String userName, String password) {
-        return null;
+    public Users signUp(Users users) {
+        //encoding the user password before saving it to the db
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        return userRepository.save(users);
     }
+
+    @Override
+    public Users signIn(String userName, String password) {
+            Users users = userRepository.findByUsername(userName).orElse(null);
+            if (users != null && passwordEncoder.matches(password, users.getPassword())) {
+                return users;
+            }
+
+            return null;
+    }
+
+    @Override
+    public Users findByUsername(String username) {
+       return userRepository.findByUsername(username).orElse(null);
+    }
+
 }

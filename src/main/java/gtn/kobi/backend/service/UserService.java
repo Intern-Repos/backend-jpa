@@ -1,8 +1,10 @@
 package gtn.kobi.backend.service;
 
-import gtn.kobi.backend.model.User;
+import gtn.kobi.backend.model.Users;
 
 public interface UserService {
-    User signUp(User user);
-    User signIn(String userName, String password);
+    Users signUp(Users users);
+    Users signIn(String userName, String password);
+
+    Users findByUsername(String usrename);
 }

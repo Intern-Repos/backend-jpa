@@ -1,7 +1,10 @@
 package gtn.kobi.backend.repository;
 
-import gtn.kobi.backend.model.User;
+import gtn.kobi.backend.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<Users, Integer> {
+    Optional<Users> findByUsername(String username);
 }
