@@ -22,13 +22,13 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup (@RequestBody Users users) {
+    public ResponseEntity<String> signup (@RequestBody Users user) {
         //check if username is already taken
-        if (userService.findByUsername(users.getUsername()) != null){
+        if (userService.findByUsername(user.getUsername()) != null){
            return  new ResponseEntity<>("Username is already taken", HttpStatus.BAD_REQUEST);
         };
 
-        userService.signUp(users);
+        userService.signUp(user);
         return new ResponseEntity<>("User registereed successfully", HttpStatus.CREATED);
     };
 

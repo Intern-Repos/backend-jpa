@@ -18,17 +18,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users signUp(Users users) {
+    public Users signUp(Users user) {
         //encoding the user password before saving it to the db
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-        return userRepository.save(users);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     @Override
     public Users signIn(String userName, String password) {
-            Users users = userRepository.findByUsername(userName).orElse(null);
-            if (users != null && passwordEncoder.matches(password, users.getPassword())) {
-                return users;
+            Users user = userRepository.findByUsername(userName).orElse(null);
+            if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+                return user;
             }
 
             return null;
